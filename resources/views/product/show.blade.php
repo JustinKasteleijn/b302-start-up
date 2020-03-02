@@ -4,7 +4,7 @@
     <div class="container">
         <br>
         <h1>{{$product->title}}</h1>
-        <img class=cardimg src="https://googleplus-covers.com/covers/nature_balloon_ride.jpg" width="100%"
+        <img class=cardimg alt="default image" src="https://googleplus-covers.com/covers/nature_balloon_ride.jpg" width="100%"
              height="50%">
         <p> {{$product->description }}</p><br>
         <h2>Email of the seller: {{ $product->user->email }}</h2><br>
@@ -12,7 +12,7 @@
         <hr>
         <br>
 
-        @if(Auth::user()->id === $product->user->id)
+        @if(Gate::forUser(Auth::user())->any(['update-product', 'delete-product'], $post))
             <form action="{{$product->id}}./edit" method="get">
                 <input type="submit" value="Update product"
                        name="Submit" class="button" style="background-color: gray"/>
